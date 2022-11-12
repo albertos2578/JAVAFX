@@ -22,7 +22,8 @@ import lombok.Setter;
 import lombok.Getter;
 
 import java.sql.Timestamp;
-import java.util.Observable;
+import java.util.ArrayList;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -33,13 +34,15 @@ import javafx.collections.ObservableList;
  */
 
 public class Pedidos implements Serializable {
-       private static final String GETALLPEDIDOS = "SELECT * FROM `pedidos`";
-     private static Connection conexion= Conexion.getConexion();
-     @Override
-	public String toString() {
-		return "Pedidos [fecha=" + fecha + ", cliente=" + cliente + ", estado=" + estado + ", producto=" + producto
-				+ "]";
-	}
+
+    @Override
+    public String toString() {
+        return "Pedidos{" + "NumeroPedido=" + NumeroPedido + ", fecha=" + fecha + ", cliente=" + cliente + ", estado=" + estado + ", producto=" + producto + '}';
+    }
+    
+
+	
+	
 	public Timestamp getFecha() {
 		return fecha;
 	}
@@ -64,32 +67,22 @@ public class Pedidos implements Serializable {
 	public void setProducto(String producto) {
 		this.producto = producto;
 	}
+       
+
+    public int getNumeroPedido() {
+        return NumeroPedido;
+    }
+
+    public void setNumeroPedido(int NumeroPedido) {
+        this.NumeroPedido = NumeroPedido;
+    }
+     private int NumeroPedido;
 	private Timestamp fecha;
      private String cliente;
      private String estado;
      private String  producto;
      
      
-        public ObservableList<Pedidos> getPedidos(){
-            ObservableList<Pedidos> obs = FXCollections.observableArrayList();
-            var  pedido = new Pedidos();
-		    try(var pst=conexion.prepareStatement(GETALLPEDIDOS)){
-	            ResultSet resultado = pst.executeQuery();
-	            while(resultado.next()){
-	            
-	            pedido.setCliente(resultado.getString("cliente"));
-	            pedido.setEstado(resultado.getString("estado"));
-	            pedido.setProducto(resultado.getString("producto"));
-	            pedido.setFecha(resultado.getTimestamp("fecha"));
-	               obs.add(pedido);
-	                
-	            }
-	        } catch (SQLException ex) {
-	              Logger.getLogger(PedidosDAOMYSQL.class.getName()).log(Level.SEVERE, null, ex);
-	          }
-	     return obs;
-                        
-                
-            }
+      
         }
             

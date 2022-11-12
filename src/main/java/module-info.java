@@ -7,6 +7,8 @@ module com.mycompany.jdbc_fx {
     requires java.sql;
     requires java.base;
     requires lombok;
+    requires javafx.base;
+    requires javafx.graphics;
     
     opens com.mycompany.jdbc_fx to javafx.fxml;
     opens models;

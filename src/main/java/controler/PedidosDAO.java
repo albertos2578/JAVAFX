@@ -19,7 +19,7 @@ public interface PedidosDAO {
     
     void delete(Timestamp fecha);
     
-    void update(Timestamp fecha);
+    void update(int numeroPedid,Pedidos pedidoActualizar);
     
     Pedidos get(Timestamp fecha);
     
@@ -29,13 +29,8 @@ public interface PedidosDAO {
      
  	ArrayList<Pedidos> GetAllPedidosByCliente(String cliente);
  	
-    int NumeroClientes();
-    ArrayList<Pedidos> NombreClientes();
 
-	String ProductoRepetido();
-
-	int TotalDeIngresosDelMes();
-     
+   
 
 }
 

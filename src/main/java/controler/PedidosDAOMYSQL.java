@@ -28,8 +28,8 @@ public class PedidosDAOMYSQL implements PedidosDAO {
 	  private static final String getpedidoporcliente_query= "Select * From `pedidos` where cliente= ? ";
       private static final String GET_PEDIDOS_HOY_QUERY= "Select *  From `pedidos` where EXTRACT(DAY FROM fecha)= EXTRACT(DAY FROM CURDATE());";
       private static final String DELETE_QUERY = "DELETE FROM pedidos WHERE `pedidos`.`fecha` = ?";
-      private static final String UPDATE= "update `pedidos` SET `estado` = ? WHERE `pedidos`.`fecha` = ?;";
-       private static final String GETALLPEDIDOS = "SELECT * FROM `pedidos`";
+   private static final String UPDATE= "update pedidos  SET  estado=?, producto=?, cliente=?  WHERE NumeroPedido = ?";
+       private static final String GETALLPEDIDOS = "SELECT * FROM `pedidos` order by fecha";
       private static final String Ventas_QUERY= "SELECT sum(precio) FROM productos INNER JOIN pedidos ON pedidos.producto = p.nombre where EXTRACT(MONTH FROM fecha) = EXTRACT(MONTH FROM NOW());";
        private static final String add_query  = "INSERT INTO `pedidos` (`cliente`, `estado`, `producto`, `fecha`) VALUES (?, ?, ?, ?);";
        private static final String Numero_clientes_QUERY = "SELECT count(DISTINCT cliente) as 'miau' FROM `pedidos`;";
@@ -80,11 +80,17 @@ public class PedidosDAOMYSQL implements PedidosDAO {
 
    
    
-    public void update(Timestamp fecha){
-          try( var pst=conexion.prepareStatement(UPDATE)){
-        
-        	  		pst.setString(1, "Recogido");
-                    pst.setTimestamp(2, fecha);
+    public void update(int numeroPedid,Pedidos pedidoActualizar){
+            try( var pst=conexion.prepareStatement(UPDATE)){
+        	  	
+        	  	System.out.println(pedidoActualizar.getEstado());
+        	  	System.out.println(numeroPedid);
+                    pst.setString(1, pedidoActualizar.getEstado());
+                    pst.setString(2, pedidoActualizar.getProducto());
+                    pst.setString(3,pedidoActualizar.getCliente());
+                    pst.setInt(4, numeroPedid);
+                    
+                    
                    if(pst.executeUpdate()==0){
                         Logger.getLogger(PedidosDAOMYSQL.class.getName()).warning("cliente no existe");
                    }
@@ -101,6 +107,7 @@ public class PedidosDAOMYSQL implements PedidosDAO {
             ResultSet resultado = pst.executeQuery();
             while(resultado.next()){
                   var  pedido = new Pedidos();
+            pedido.setNumeroPedido(resultado.getInt("NumeroPedido"));
             pedido.setCliente(resultado.getString("cliente"));
             pedido.setEstado(resultado.getString("estado"));
             pedido.setProducto(resultado.getString("producto"));
@@ -122,6 +129,7 @@ public class PedidosDAOMYSQL implements PedidosDAO {
             ResultSet resultado = pst.executeQuery();
             while(resultado.next()){
                   var  pedido = new Pedidos();
+                  pedido.setNumeroPedido(resultado.getInt("NumeroPedido"));
             pedido.setCliente(resultado.getString("cliente"));
             pedido.setEstado(resultado.getString("estado"));
             pedido.setProducto(resultado.getString("producto"));
@@ -161,24 +169,6 @@ public class PedidosDAOMYSQL implements PedidosDAO {
 	     return salida;
 	    }
         
-          @Override
-    public int NumeroClientes() {
-        int a = 0;
-      
-        try(var pst=conexion.prepareStatement(Numero_clientes_QUERY)){
-            ResultSet resultado = pst.executeQuery();
-               if (resultado.next()) {
-  
-              a= resultado.getInt("miau");
-              System.out.println(a);
-               }
-            
-        } catch (SQLException ex) {
-              Logger.getLogger(PedidosDAOMYSQL.class.getName()).log(Level.SEVERE, null, ex);
-          }
-     return a;
-    }
-          
 
 
 
@@ -206,73 +196,7 @@ public class PedidosDAOMYSQL implements PedidosDAO {
 	    }
 
 
-
-
-
-		@Override
-		public ArrayList<Pedidos> NombreClientes() {
-			
-			   var salida = new ArrayList<Pedidos>();
-		        try(var pst=conexion.prepareStatement(Nombres_clientes_QUERY)){
-		        	
-		            ResultSet resultado = pst.executeQuery();
-		            while(resultado.next()){
-		                  var  pedido = new Pedidos();
-		            pedido.setCliente(resultado.getString("cliente"));
-           
-		               salida.add(pedido);
-		         
-		                
-		            }
-		        } catch (SQLException ex) {
-		              Logger.getLogger(PedidosDAOMYSQL.class.getName()).log(Level.SEVERE, null, ex);
-		          }
-		     return salida;
-		}
 		
-		   @Override
-		    public String ProductoRepetido() {
-			
-					  String salida = "";
-				        try(var pst=conexion.prepareStatement(Producto_Fav_QUERY)){
-				        	
-				            ResultSet resultado = pst.executeQuery();
-				        
-				               if (resultado.next()) {
-		  
-		              salida= resultado.getString("producto");
-		             
-		               }
-       
-				            } catch (SQLException ex) {
-		                  Logger.getLogger(PedidosDAOMYSQL.class.getName()).log(Level.SEVERE, null, ex);
-		              }
-				      
-				     return salida;
-				}
-		   
-		   
-		   @Override
-		    public int TotalDeIngresosDelMes() {
-			
-					  int salida = 0;
-				        try(var pst=conexion.prepareStatement(Ventas_QUERY)){
-				        	
-				            ResultSet resultado = pst.executeQuery();
-				        
-				               if (resultado.next()) {
-		  
-		              salida= resultado.getInt("sum(precio)");
-		             
-		               }
-      
-				            } catch (SQLException ex) {
-		                  Logger.getLogger(PedidosDAOMYSQL.class.getName()).log(Level.SEVERE, null, ex);
-		              }
-				      
-				     return salida;
-				}
-			
 		}
 
     
