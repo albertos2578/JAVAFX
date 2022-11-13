@@ -43,17 +43,17 @@ public class SecondaryController implements Initializable {
        
         
  
-    @FXML
+      @FXML
     private TableView<Pedidos> tabla1;
-    @FXML
+      @FXML
     private TableColumn<Pedidos, Integer> NumeroDelPedido1;
-    @FXML
+      @FXML
     private TableColumn<Pedidos, String> clienteID1;
-    @FXML
+      @FXML
     private TableColumn<Pedidos, String> productoID1;
-    @FXML
+      @FXML
     private TableColumn<Pedidos, String> estadoID1;
-    @FXML
+      @FXML
     private TableColumn<Pedidos, Timestamp> fechaID1;
    
     @FXML
@@ -71,17 +71,16 @@ public class SecondaryController implements Initializable {
     @FXML
     private Button btnActualizar;
     @FXML
-    private Button btnBorrar;
+    private Button Volver;
     @FXML
-    private Label detalle;
+    private Button BorrarID;
+  
    
     
      
    
 
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
-    }
+   
       @Override
     public void initialize(URL url, ResourceBundle rb) {
              this.NumeroDelPedido1.setCellValueFactory(new PropertyValueFactory<>("NumeroPedido"));
@@ -96,48 +95,7 @@ public class SecondaryController implements Initializable {
     }
 
 
-    @FXML
-    private void añadirTarea(ActionEvent event) {
-        
-            try {
-              App.setRoot("añadir");
-          } catch (IOException ex) {
-              Logger.getLogger(PrimaryController.class.getName()).log(Level.SEVERE, null, ex);
-          }
-        
-    }
-
-    @FXML
-    private void actualizarTarea(ActionEvent event) {
-      
-                   
-     numeropeda = Integer.parseInt(NumeroPedido.getText());
-          
-            System.out.println(numeropeda);
-            
-           cli=ClienteText.getText();
-           pedidosActualizar.setCliente(cli);
-              est=textEstado.getText();
-           pedidosActualizar.setEstado(est);
-           pro=ProductoText.getText();
-           pedidosActualizar.setProducto(pro);
-            dau.update(numeropeda,pedidosActualizar);
-        
-         //actualizamos la tabla que tenemos en ejecucion
-         Pedidos p= new Pedidos();
-       ArrayList<Pedidos> items= dau.getAllPEDIDOS();
-    var   itemss = FXCollections.observableList(items);
-       this.tabla1.setItems(itemss);
-    }
-
-    @FXML
-    private void borrarTarea(ActionEvent event) {
-          try {
-              App.setRoot("secondary");
-          } catch (IOException ex) {
-              Logger.getLogger(PrimaryController.class.getName()).log(Level.SEVERE, null, ex);
-          }
-    }
+  
 
     @FXML
     private void mostrarTarea(MouseEvent event) {
@@ -157,5 +115,60 @@ public class SecondaryController implements Initializable {
 
   
 }
+
+    @FXML
+    private void Volver(ActionEvent event) {
+          try {
+              App.setRoot("primary");
+          } catch (IOException ex) {
+              Logger.getLogger(PrimaryController.class.getName()).log(Level.SEVERE, null, ex);
+          }
+    }
+
+    @FXML
+    private void añadirPedido(ActionEvent event) {
+           try {
+              App.setRoot("añadir");
+          } catch (IOException ex) {
+              Logger.getLogger(PrimaryController.class.getName()).log(Level.SEVERE, null, ex);
+          }
+    }
+
+    @FXML
+    private void actualizarPedido(ActionEvent event) {
+          
+                   
+     numeropeda = Integer.parseInt(NumeroPedido.getText());
+          
+            System.out.println(numeropeda);
+            
+           cli=ClienteText.getText();
+           pedidosActualizar.setCliente(cli);
+              est=textEstado.getText();
+           pedidosActualizar.setEstado(est);
+           pro=ProductoText.getText();
+           pedidosActualizar.setProducto(pro);
+            dau.update(numeropeda,pedidosActualizar);
+        
+         //actualizamos la tabla que tenemos en ejecucion
+         Pedidos p= new Pedidos();
+       ArrayList<Pedidos> items= dau.getAllPEDIDOS();
+    var   itemss = FXCollections.observableList(items);
+       this.tabla1.setItems(itemss);
+    }
+    
+
+    @FXML
+    private void borrarPedido(ActionEvent event) {
+   numeropeda = Integer.parseInt(NumeroPedido.getText());
+        dau.delete(numeropeda);
+     
+             Pedidos p= new Pedidos();
+       ArrayList<Pedidos> items= dau.GETALGUNOS();
+    var   itemss = FXCollections.observableList(items);
+       this.tabla1.setItems(itemss);
+         
+    }
 }
+
 
