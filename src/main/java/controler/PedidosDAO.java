@@ -17,7 +17,7 @@ public interface PedidosDAO {
     
 	void add(Pedidos p);
     
-    void delete(Timestamp fecha);
+    void delete(int numeroPedid);
     
     void update(int numeroPedid,Pedidos pedidoActualizar);
     
@@ -27,7 +27,7 @@ public interface PedidosDAO {
      
      ArrayList<Pedidos> getAllPEDIDOS();
      
- 	ArrayList<Pedidos> GetAllPedidosByCliente(String cliente);
+ 
  	
 
    

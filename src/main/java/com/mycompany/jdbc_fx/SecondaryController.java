@@ -32,10 +32,10 @@ import models.Pedidos;
 public class SecondaryController implements Initializable {
       static ProductosDAOMYSQL dao = new ProductosDAOMYSQL();
     static PedidosDAOMYSQL dau = new PedidosDAOMYSQL();
-    ArrayList<Timestamp> tiemposDePedidos = new ArrayList<Timestamp>();
-    int numerito;
+
+  
     Pedidos pedidosActualizar= new Pedidos();
-    String  cli;
+    String cli;
     String pro;
     String est;
     Timestamp fec;
@@ -97,24 +97,6 @@ public class SecondaryController implements Initializable {
 
   
 
-    @FXML
-    private void mostrarTarea(MouseEvent event) {
-          Pedidos pedidos = tabla1.getSelectionModel().getSelectedItem();
-          Timestamp ara = pedidos.getFecha();
-      
-
-        if (pedidos != null) {
-            NumeroPedido.setText(pedidos.getNumeroPedido()+"");
-            System.out.println(pedidos.getNumeroPedido());
-            ClienteText.setText(pedidos.getCliente());
-            textEstado.setText(pedidos.getEstado());
-            ProductoText.setText(pedidos.getProducto());
-                 textFecha.setText(pedidos.getFecha().toString());
-    
-    }
-
-  
-}
 
     @FXML
     private void Volver(ActionEvent event) {
@@ -126,7 +108,7 @@ public class SecondaryController implements Initializable {
     }
 
     @FXML
-    private void añadirPedido(ActionEvent event) {
+    private void añadirPedido(ActionEvent event) {//mejora adicional
            try {
               App.setRoot("añadir");
           } catch (IOException ex) {
@@ -159,15 +141,38 @@ public class SecondaryController implements Initializable {
     
 
     @FXML
-    private void borrarPedido(ActionEvent event) {
+    private void borrarPedido(ActionEvent event) {//mejora adicional
    numeropeda = Integer.parseInt(NumeroPedido.getText());
         dau.delete(numeropeda);
      
              Pedidos p= new Pedidos();
-       ArrayList<Pedidos> items= dau.GETALGUNOS();
+       ArrayList<Pedidos> items= dau.getAllPEDIDOS();
     var   itemss = FXCollections.observableList(items);
        this.tabla1.setItems(itemss);
+          NumeroPedido.setText("");
+           ClienteText.setText("");
+            textEstado.setText("");
+            ProductoText.setText("");
+                 textFecha.setText("");
          
+    }
+
+    @FXML
+    private void mostrarPedido(MouseEvent event) {
+        
+             Pedidos pedidos = tabla1.getSelectionModel().getSelectedItem();
+      
+      
+
+        if (pedidos != null) {
+            NumeroPedido.setText(pedidos.getNumeroPedido()+"");
+       
+            ClienteText.setText(pedidos.getCliente());
+            textEstado.setText(pedidos.getEstado());
+            ProductoText.setText(pedidos.getProducto());
+                 textFecha.setText(pedidos.getFecha().toString());
+    
+    }
     }
 }
 

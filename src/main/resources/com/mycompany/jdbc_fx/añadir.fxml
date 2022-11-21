@@ -16,7 +16,7 @@
    <children>
       <BorderPane prefHeight="379.0" prefWidth="600.0">
          <top>
-            <TableView id="tabla" fx:id="tablaProducto" onMouseClicked="#mostrarTarea" prefHeight="230.0" prefWidth="671.0" stylesheets="@../../../../../../../LoginFXML-master/src/main/resources/com/mycompany/loginfxml/stilo.css" BorderPane.alignment="CENTER">
+            <TableView id="tabla" fx:id="tablaProducto" onMouseClicked="#mostrarProducto" prefHeight="230.0" prefWidth="671.0" stylesheets="@../../../../../../../LoginFXML-master/src/main/resources/com/mycompany/loginfxml/stilo.css" BorderPane.alignment="CENTER">
                <columns>
                   <TableColumn fx:id="Producto" prefWidth="178.0" text="Producto" />
                   <TableColumn fx:id="Disponibilidad" prefWidth="75.0" text="Disponibilidad" />
@@ -49,9 +49,8 @@
                   </GridPane>
                   <FlowPane alignment="CENTER" hgap="20.0">
                      <children>
-                        <Button fx:id="btnAñadir" mnemonicParsing="false" onAction="#añadirTarea" text="Añadir" />
-                        <Button fx:id="btnActualizar" mnemonicParsing="false" onAction="#actualizarTarea" text="Actualizar" />
-                        <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#borrarTarea" text="Borrar" />
+                        <Button fx:id="btnAñadir" mnemonicParsing="false" onAction="#añadirPedido" text="Añadir" />
+                        <Button fx:id="Volver" mnemonicParsing="false" onAction="#volver" text="Volver" />
                      </children>
                   </FlowPane>
                </children>

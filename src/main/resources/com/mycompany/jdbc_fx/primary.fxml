@@ -3,10 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -14,10 +10,12 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="704.0" maxWidth="952.0" minHeight="620.0" minWidth="952.0" prefHeight="620.0" prefWidth="952.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.jdbc_fx.PrimaryController">
+<VBox alignment="CENTER" prefHeight="719.0" prefWidth="1071.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.jdbc_fx.PrimaryController">
    <children>
       <BorderPane prefHeight="667.0" prefWidth="912.0">
          <bottom>
@@ -45,26 +43,21 @@
                         <Label text="Fecha" GridPane.rowIndex="4" />
                         <TextField fx:id="textFecha" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Label text="Nº Pedido" />
-                        <TextField fx:id="NumeroPedido" GridPane.columnIndex="1" />
+                        <TextField fx:id="NumeroPedido" editable="false" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                   <FlowPane alignment="CENTER" hgap="20.0">
                      <children>
-                        <Button fx:id="btnAñadir" mnemonicParsing="false" onAction="#añadirTarea" text="Añadir" />
-                        <Button fx:id="btnActualizar" mnemonicParsing="false" onAction="#actualizarTarea" text="Actualizar" />
-                        <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#borrarTarea" text="Borrar" />
+                        <Button fx:id="btnAñadir" mnemonicParsing="false" onAction="#añadirPedido" text="Añadir" />
+                        <Button fx:id="btnActualizar" mnemonicParsing="false" onAction="#actualizarPedido" text="Actualizar" />
+                        <Button fx:id="BorrarID" mnemonicParsing="false" onAction="#borrarPedido" text="Borrar" />
                      </children>
                   </FlowPane>
-                  <Label fx:id="detalle" text="Label">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </Label>
                </children>
             </VBox>
          </bottom>
          <center>
-            <TableView id="tabla" fx:id="tabla" onMouseClicked="#mostrarTarea" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../../../../../../LoginFXML-master/src/main/resources/com/mycompany/loginfxml/stilo.css" BorderPane.alignment="CENTER">
+            <TableView id="tabla" fx:id="tabla" onMouseClicked="#mostrarPedido" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../../../../../../LoginFXML-master/src/main/resources/com/mycompany/loginfxml/stilo.css" BorderPane.alignment="CENTER">
                <columns>
                   <TableColumn fx:id="NumeroDelPedido" prefWidth="75.0" text="Número del pedido" />
                   <TableColumn fx:id="clienteID" prefWidth="39.99993896484375" text="Cliente" />
@@ -81,28 +74,25 @@
             </TableView>
          </center>
          <top>
-            <VBox BorderPane.alignment="CENTER">
-               <children>
-                  <MenuBar>
-                     <menus>
-                        <Menu mnemonicParsing="false" text="Archivo">
-                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#abrirVentanaPerfil" text="Cambiar Perfil" />
-                              <SeparatorMenuItem mnemonicParsing="false" />
-                              <MenuItem fx:id="menuSalir" mnemonicParsing="false" onAction="#switchToPrimary" text="Cerrar" />
-                           </items>
-                        </Menu>
-                     </menus>
-                  </MenuBar>
-                  <Label fx:id="info" text="Secondary View">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Label>
-               </children>
-            </VBox>
+            <Label text="PEDIDOS HOY" textFill="#229c31" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <graphic>
+                  <Pane prefHeight="26.0" prefWidth="24.0" />
+               </graphic>
+            </Label>
          </top>
       </BorderPane>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <FlowPane alignment="CENTER" hgap="20.0">
+               <children>
+                  <Button fx:id="Volver" mnemonicParsing="false" onAction="#Volver" text="Ir a pedidos totales" />
+               </children>
+            </FlowPane>
+         </children>
+      </VBox>
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

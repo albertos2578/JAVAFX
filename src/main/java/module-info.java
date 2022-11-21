@@ -10,6 +10,7 @@ module com.mycompany.jdbc_fx {
     requires javafx.base;
     requires javafx.graphics;
     
+    
     opens com.mycompany.jdbc_fx to javafx.fxml;
     opens models;
     exports com.mycompany.jdbc_fx;

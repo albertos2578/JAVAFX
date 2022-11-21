@@ -34,6 +34,13 @@ import javafx.collections.ObservableList;
  */
 
 public class Pedidos implements Serializable {
+    
+    
+     private int NumeroPedido; 
+     private Timestamp fecha;
+     private String cliente;
+     private String estado;
+     private String  producto;
 
     @Override
     public String toString() {
@@ -41,8 +48,6 @@ public class Pedidos implements Serializable {
     }
     
 
-	
-	
 	public Timestamp getFecha() {
 		return fecha;
 	}
@@ -76,11 +81,7 @@ public class Pedidos implements Serializable {
     public void setNumeroPedido(int NumeroPedido) {
         this.NumeroPedido = NumeroPedido;
     }
-     private int NumeroPedido;
-	private Timestamp fecha;
-     private String cliente;
-     private String estado;
-     private String  producto;
+ 
      
      
       

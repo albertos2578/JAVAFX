@@ -6,14 +6,19 @@ package com.mycompany.jdbc_fx;
 
 import static com.mycompany.jdbc_fx.PrimaryController.dau;
 import controler.ProductosDAOMYSQL;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -23,13 +28,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import models.Pedidos;
 import models.Productos;
-import org.hibernate.query.criteria.internal.expression.function.CurrentTimeFunction;
 /**
  * FXML Controller class
  *
  * @author alber
  */
-public class AñadirController implements Initializable {
+public class AñadirController implements Initializable {//mejora adicional
  static ProductosDAOMYSQL dao = new ProductosDAOMYSQL();
 
     @FXML
@@ -43,15 +47,13 @@ public class AñadirController implements Initializable {
     @FXML
     private Button btnAñadir;
     @FXML
-    private Button btnActualizar;
-    @FXML
-    private Button btnBorrar;
-    @FXML
     private TableColumn<Productos, String> Disponibilidad;
     @FXML
     private TableColumn<Productos, String> TipoID;
     @FXML
     private TableColumn<Productos, Integer> precioID;
+    @FXML
+    private Button Volver;
     /**
      * Initializes the controller class.
      */
@@ -69,13 +71,22 @@ public class AñadirController implements Initializable {
        this.tablaProducto.setItems(itemss);
     }
       
-    
+  
+
+  
+
     @FXML
-    private void mostrarTarea(MouseEvent event) {
+    private void volver(ActionEvent event) {
+           try {
+              App.setRoot("primary");
+          } catch (IOException ex) {
+              Logger.getLogger(PrimaryController.class.getName()).log(Level.SEVERE, null, ex);
+          }
+        
     }
 
     @FXML
-    private void añadirTarea(ActionEvent event) {
+    private void añadirPedido(ActionEvent event) {
         Pedidos pedidoAñadir= new Pedidos();
         ClienteText.getText();
         ProductoText.getText();
@@ -85,14 +96,12 @@ public class AñadirController implements Initializable {
         pedidoAñadir.setEstado("En preparación");
         pedidoAñadir.setFecha(fecha);
         dau.add(pedidoAñadir);
+       
+            
     }
 
     @FXML
-    private void actualizarTarea(ActionEvent event) {
-    }
-
-    @FXML
-    private void borrarTarea(ActionEvent event) {
+    private void mostrarProducto(MouseEvent event) {
     }
 
 }

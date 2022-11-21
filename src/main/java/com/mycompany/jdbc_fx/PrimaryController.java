@@ -41,19 +41,11 @@ public class PrimaryController implements Initializable {
     int numeropeda;
        
         
-    @FXML
-    private MenuItem menuSalir;
-    @FXML
-    private Label info;
    
     @FXML
     private Button btnAñadir;
     @FXML
     private Button btnActualizar;
-    @FXML
-    private Button btnBorrar;
-    @FXML
-    private Label detalle;
     @FXML
     private TableView<Pedidos> tabla;
     @FXML
@@ -77,14 +69,16 @@ public class PrimaryController implements Initializable {
     private TextField textFecha;
     @FXML
     private TextField NumeroPedido;
+    @FXML
+    private Button BorrarID;
+    @FXML
+    private Button Volver;
    
     
      
    
 
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
-    }
+  
       @Override
     public void initialize(URL url, ResourceBundle rb) {
              this.NumeroDelPedido.setCellValueFactory(new PropertyValueFactory<>("NumeroPedido"));
@@ -98,32 +92,32 @@ public class PrimaryController implements Initializable {
        this.tabla.setItems(itemss);
     }
 
-    @FXML
-    private void abrirVentanaPerfil(ActionEvent event) {
-    }
+
 
     @FXML
-    private void switchToPrimary(ActionEvent event) {
-    }
-
-    @FXML
-    private void añadirTarea(ActionEvent event) {
-            try {
-              App.setRoot("añadir");
+    private void Volver(ActionEvent event) {
+         try {
+              App.setRoot("secondary");
           } catch (IOException ex) {
               Logger.getLogger(PrimaryController.class.getName()).log(Level.SEVERE, null, ex);
           }
     }
-    
 
     @FXML
-    private void actualizarTarea(ActionEvent event) {
-      
-                   
+    private void añadirPedido(ActionEvent event) {//mejora adicional
+           try {
+              App.setRoot("añadir");
+          } catch (IOException ex) {
+              Logger.getLogger(PrimaryController.class.getName()).log(Level.SEVERE, null, ex);
+          }
+        
+    }
+
+    @FXML
+    private void actualizarPedido(ActionEvent event) {
+                      
      numeropeda = Integer.parseInt(NumeroPedido.getText());
-          
-            System.out.println(numeropeda);
-            
+   
            cli=ClienteText.getText();
            pedidosActualizar.setCliente(cli);
               est=textEstado.getText();
@@ -140,30 +134,34 @@ public class PrimaryController implements Initializable {
     }
 
     @FXML
-    private void borrarTarea(ActionEvent event) {
-          try {
-              App.setRoot("secondary");
-          } catch (IOException ex) {
-              Logger.getLogger(PrimaryController.class.getName()).log(Level.SEVERE, null, ex);
-          }
+    private void borrarPedido(ActionEvent event) {//mejora adicional
+          numeropeda = Integer.parseInt(NumeroPedido.getText());
+        dau.delete(numeropeda);
+     
+             Pedidos p= new Pedidos();
+       ArrayList<Pedidos> items= dau.GETALGUNOS();
+    var   itemss = FXCollections.observableList(items);
+       this.tabla.setItems(itemss);
+              NumeroPedido.setText("");
+           ClienteText.setText("");
+            textEstado.setText("");
+            ProductoText.setText("");
+                 textFecha.setText("");
     }
 
     @FXML
-    private void mostrarTarea(MouseEvent event) {
+    private void mostrarPedido(MouseEvent event) {
           Pedidos pedidos = tabla.getSelectionModel().getSelectedItem();
-          Timestamp ara = pedidos.getFecha();
+     
       
 
         if (pedidos != null) {
             NumeroPedido.setText(pedidos.getNumeroPedido()+"");
-            System.out.println(pedidos.getNumeroPedido());
+       
             ClienteText.setText(pedidos.getCliente());
             textEstado.setText(pedidos.getEstado());
             ProductoText.setText(pedidos.getProducto());
                  textFecha.setText(pedidos.getFecha().toString());
-    
     }
-
-  
-}
+    }
 }
